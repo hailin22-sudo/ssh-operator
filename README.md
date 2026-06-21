@@ -1,23 +1,74 @@
 # SSH Operator
 
-通过 SSH/SFTP 远程部署项目、管理 Docker、操作宝塔面板。
+> 让 AI Agent 自动登录你的服务器，完成部署、重启、看日志、配 Nginx、管宝塔面板。
 
-## 有什么用
+[![TRAE](https://img.shields.io/badge/TRAE-compatible-blue)](https://trae.ai)
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-compatible-orange)](https://claude.ai/code)
+[![Codex](https://img.shields.io/badge/OpenAI%20Codex-compatible-green)](https://openai.com/codex)
+[![Cursor](https://img.shields.io/badge/Cursor-compatible-black)](https://cursor.sh)
 
-- 上传文件/文件夹到远程服务器
-- 远程执行 docker-compose 构建和重启
-- 部署前自动备份代码和数据库
-- 查看服务器状态、收集日志
-- 宝塔面板安装、`bt` 命令、Nginx 反代配置
+**SSH Operator** 是一个跨平台 Agent Skill。把它丢给 TRAE、Claude Code、Codex 或 Cursor，它们就能通过 SSH/SFTP 连接你的 Linux 服务器，自动执行部署、Docker 管理、日志排查、Nginx 配置、宝塔面板操作等任务。
+
+你不需要手写一堆部署脚本，只要告诉 Agent：「把最新代码部署到我的服务器」，它就会按规范完成备份 → 上传 → 重启 → 验证。
+
+---
+
+## 能做什么
+
+- **自动部署**：上传文件或整个文件夹，远程执行 `docker-compose up -d --build`
+- **部署前备份**：自动备份代码、Nginx 配置、Docker volumes、SQLite 数据库
+- **健康检查**：CPU、内存、磁盘、Docker、Nginx、HTTP 接口一键检查
+- **日志收集**：把 Docker、Nginx、宝塔日志拉到本地分析
+- **宝塔适配**：安装宝塔、查看面板信息、重载 Nginx、查看 Docker 状态
+- **Nginx 管理**：查看/备份站点配置，追加 `/api/` 反向代理
+
+---
+
+## 快速开始
+
+### 1. 安装依赖
+
+```bash
+pip install -r requirements.txt
+```
+
+### 2. 配置服务器信息
+
+```bash
+cp .env.example .env
+```
+
+编辑 `.env`：
+
+```env
+SSH_HOST=1.2.3.4
+SSH_PORT=22
+SSH_USER=root
+SSH_PASS=你的密码
+# 或 SSH_KEY_PATH=/path/to/key
+
+REMOTE_ROOT=/www/wwwroot/your-project
+```
+
+> `.env` 只存在本地，不会上传到 GitHub。
+
+### 3. 让 Agent 接管
+
+把本 Skill 目录配置进你的 Agent（TRAE、Claude Code、Codex、Cursor），然后说：
+
+> 「把当前项目部署到我的服务器，先备份再重启。」
+
+Agent 会读取 `.env`，调用 `scripts/` 下的脚本自动完成。
+
+---
 
 ## 文件结构
 
 ```
 ssh-operator/
-├── SKILL.md                  # Agent Skill 主指令
-├── README.md                 # 本文件
-├── scripts/                  # 脚本库
-│   ├── _ssh.py               # SSH 连接和配置公共模块
+├── SKILL.md                  # Agent 主指令
+├── scripts/                  # 可执行脚本
+│   ├── _ssh.py               # SSH 连接 + 配置加载公共模块
 │   ├── deploy-folder.py      # 多文件/文件夹部署
 │   ├── deploy-rsync.sh       # rsync 增量同步
 │   ├── backup_before_deploy.py
@@ -25,7 +76,7 @@ ssh-operator/
 │   ├── log_collector.py
 │   ├── nginx_manager.py
 │   └── bt_panel.py
-├── references/               # 参考文档
+├── references/               # 详细参考
 │   ├── baota.md
 │   ├── bt-commands.md
 │   └── troubleshooting.md
@@ -34,45 +85,7 @@ ssh-operator/
 └── LICENSE
 ```
 
-## 3 分钟上手
-
-### 1. 安装依赖
-
-```bash
-pip install -r requirements.txt
-```
-
-### 2. 配置连接信息
-
-复制 `.env.example` 为 `.env`，填写服务器信息：
-
-```bash
-cp .env.example .env
-```
-
-```env
-SSH_HOST=1.2.3.4
-SSH_PORT=22
-SSH_USER=root
-SSH_PASS=你的密码
-# 或者用密钥：SSH_KEY_PATH=/path/to/key
-
-REMOTE_ROOT=/www/wwwroot/your-project
-```
-
-> `.env` 只存在本地，不会上传到 GitHub（已在 `.gitignore` 中排除）。
-
-### 3. 运行脚本
-
-例如部署项目：
-
-```bash
-# 复制脚本到项目目录时，记得同时复制 _ssh.py
-cp scripts/deploy-folder.py scripts/_ssh.py ./
-python deploy-folder.py
-```
-
-每个脚本顶部都有用法注释，直接看脚本里的说明即可。
+---
 
 ## 常用命令
 
@@ -91,3 +104,14 @@ python scripts/nginx_manager.py add-proxy --site example.com --path /api/ --targ
 python scripts/bt_panel.py info
 python scripts/bt_panel.py reload-nginx
 ```
+
+---
+
+## 兼容平台
+
+- [TRAE](https://trae.ai)
+- [Claude Code](https://claude.ai/code)
+- [OpenAI Codex](https://openai.com/codex)
+- [Cursor](https://cursor.sh)
+
+遵循 [Agent Skills](https://agentskills.io/specification) 开放规范。
