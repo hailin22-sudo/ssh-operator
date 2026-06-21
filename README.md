@@ -16,6 +16,8 @@
 ## 能做什么
 
 - **自动部署**：上传文件或整个文件夹，远程执行 `docker-compose up -d --build`
+- **修改远程网站代码**：SSH 登录后直接编辑服务器上的博客/网站源码
+- **自动发布文章**：探测 WordPress/Ghost/Halo 等博客 API，用 Python 脚本发布 Markdown 文章
 - **部署前备份**：自动备份代码、Nginx 配置、Docker volumes、SQLite 数据库
 - **健康检查**：CPU、内存、磁盘、Docker、Nginx、HTTP 接口一键检查
 - **日志收集**：把 Docker、Nginx、宝塔日志拉到本地分析
@@ -71,6 +73,8 @@ ssh-operator/
 │   ├── _ssh.py               # SSH 连接 + 配置加载公共模块
 │   ├── deploy-folder.py      # 多文件/文件夹部署
 │   ├── deploy-rsync.sh       # rsync 增量同步
+│   ├── blog_api_probe.py     # 探测博客发布 API
+│   ├── publish_post.py       # 发布 Markdown 文章到 WordPress/Ghost
 │   ├── backup_before_deploy.py
 │   ├── server_health.py
 │   ├── log_collector.py
@@ -79,6 +83,7 @@ ssh-operator/
 ├── references/               # 详细参考
 │   ├── baota.md
 │   ├── bt-commands.md
+│   ├── blog_apis.md          # 博客 API 速查
 │   └── troubleshooting.md
 ├── requirements.txt
 ├── .env.example
@@ -90,6 +95,15 @@ ssh-operator/
 ## 常用命令
 
 ```bash
+# 探测博客发布 API
+python scripts/blog_api_probe.py --url https://your-blog.com
+
+# 发布 Markdown 文章
+python scripts/publish_post.py --platform wordpress --file post.md --title "标题" --status publish
+
+# 修改远程网站代码（Agent 会 SSH 登录后直接编辑）
+# 例如：修改服务器上的 theme/style.css
+
 # 健康检查
 python scripts/server_health.py --url http://1.2.3.4:8000/api/v1/health
 

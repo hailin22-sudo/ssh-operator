@@ -19,6 +19,8 @@ Operate remote Linux servers over SSH/SFTP to deploy applications, manage Docker
 - The user asks to upload files or entire folders to a remote host.
 - The user asks to view remote logs or check service status.
 - The user asks to run commands or diagnose issues on a remote server.
+- The user asks to edit remote website/blog source files.
+- The user asks to publish a blog post or detect a blog platform's publishing API.
 - The user mentions Baota / 宝塔 panel, `/www/wwwroot/`, or Chinese cloud VPS hosting.
 
 ## Capabilities
@@ -30,6 +32,8 @@ Operate remote Linux servers over SSH/SFTP to deploy applications, manage Docker
 - Inspect service health, logs, disk usage, and process state.
 - Validate that deployed changes are active (checksums, process restarts, HTTP health checks).
 - Adapt commands for Baota panel directory layout and Nginx reverse-proxy setups.
+- Edit remote website/blog source files directly over SSH.
+- Detect blog publishing APIs (WordPress, Ghost, Halo) and publish Markdown posts via Python scripts.
 
 ## Required inputs
 
@@ -83,6 +87,8 @@ Ready-to-use automation scripts. Python scripts share [`scripts/_ssh.py`](script
 | [`scripts/_ssh.py`](scripts/_ssh.py) | Shared helper: load `.env` config and open an SSH/SFTP connection. |
 | [`scripts/deploy-folder.py`](scripts/deploy-folder.py) | Recursive SFTP upload of files and folders, then run post-deploy commands. |
 | [`scripts/deploy-rsync.sh`](scripts/deploy-rsync.sh) | Incremental rsync deploy with common excludes. |
+| [`scripts/blog_api_probe.py`](scripts/blog_api_probe.py) | Detect common blog publishing APIs (WordPress, Ghost, Halo). |
+| [`scripts/publish_post.py`](scripts/publish_post.py) | Publish a Markdown file to WordPress or Ghost via REST API. |
 | [`scripts/backup_before_deploy.py`](scripts/backup_before_deploy.py) | Backup code, Nginx configs, Docker volumes, and SQLite before deploying. |
 | [`scripts/server_health.py`](scripts/server_health.py) | Collect CPU, memory, disk, Docker, Nginx, and HTTP health status. |
 | [`scripts/log_collector.py`](scripts/log_collector.py) | Pull Docker, Nginx, and Baota logs to local files for analysis. |
