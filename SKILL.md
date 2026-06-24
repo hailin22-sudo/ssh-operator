@@ -4,8 +4,27 @@ description: "Connects to remote servers via SSH/SFTP to deploy multi-file proje
 license: "MIT"
 compatibility: "Requires SSH/SFTP access, paramiko (Python) or OpenSSH client, and Docker on the remote host. Works with Claude Code, Codex, TRAE, and other Agent-Skills-compatible platforms."
 metadata:
-  author: "ai-interviewer-team"
+  author: "zhu-hailin"
   version: "1.0.0"
+  keywords:
+    - "ssh"
+    - "sftp"
+    - "deployment"
+    - "docker"
+    - "baota"
+    - "宝塔"
+    - "ai-agent"
+    - "agent-skill"
+    - "claude-code"
+    - "trae"
+    - "codex"
+    - "cursor"
+    - "blog-publishing"
+    - "nginx"
+  categories:
+    - "DevOps"
+    - "Deployment"
+    - "Server Management"
 ---
 
 # SSH Operator

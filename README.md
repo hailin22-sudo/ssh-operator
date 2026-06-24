@@ -2,10 +2,18 @@
 
 > 让 AI Agent 自动登录你的服务器，完成部署、重启、看日志、配 Nginx、管宝塔面板。
 
+![GitHub stars](https://img.shields.io/github/stars/zhu-hailin/ssh-operator?style=social)
+![GitHub license](https://img.shields.io/github/license/zhu-hailin/ssh-operator)
+![Python](https://img.shields.io/badge/Python-3.8+-blue)
+![Platform](https://img.shields.io/badge/platform-Linux-lightgrey)
+
+**平台兼容**：
 [![TRAE](https://img.shields.io/badge/TRAE-compatible-blue)](https://trae.ai)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-compatible-orange)](https://claude.ai/code)
 [![Codex](https://img.shields.io/badge/OpenAI%20Codex-compatible-green)](https://openai.com/codex)
 [![Cursor](https://img.shields.io/badge/Cursor-compatible-black)](https://cursor.sh)
+
+**关键词**：`ssh` `sftp` `deployment` `docker` `baota` `宝塔` `ai-agent` `agent-skill` `devops` `blog-publishing` `nginx`
 
 **SSH Operator** 是一个跨平台 Agent Skill。把它丢给 TRAE、Claude Code、Codex 或 Cursor，它们就能通过 SSH/SFTP 连接你的 Linux 服务器，自动执行部署、Docker 管理、日志排查、Nginx 配置、宝塔面板操作等任务。
 
